@@ -41,8 +41,9 @@ module RecommenderService
       end
       
       score = score.sort_by {|k,v| v}.reverse
+      score = score.map {|s| s[0]}
       max_length = [items_in_rooster.length, 10].min
-      score.keys[0, max_length]
+      score[0, max_length]
     end
 
     def serialize(data)

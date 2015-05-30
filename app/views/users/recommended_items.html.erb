@@ -113,7 +113,7 @@ table tr:hover td {
   <tbody>
     <% @items[:exact].each do |item| %>
       <tr>
-        <td><b><i><%= item.name %></i></b></td>
+        <td><b><i><%= item.name rescue 'UNSPECIFIED' %></i></b></td>
         <td><b><i><%= item.item_type %></i></b></td>
         <td><b><i><%= item.restaurant_name %></i></b></td>
         <td><b><i><%= item.base_price %></i></b></td>
@@ -122,7 +122,7 @@ table tr:hover td {
     
     <% @items[:aux].each do |item| %>
       <tr>
-        <td><%= item.name %></td>
+        <td><%= item.name rescue 'UNSPECIFIED' %></td>
         <td><%= item.item_type %></td>
         <td><%= item.restaurant_name %></td>
         <td><%= item.base_price %></td>
