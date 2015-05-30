@@ -1,0 +1,29 @@
+<%= form_for(@auxillary_preference) do |f| %>
+  <% if @auxillary_preference.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@auxillary_preference.errors.count, "error") %> prohibited this auxillary_preference from being saved:</h2>
+
+      <ul>
+      <% @auxillary_preference.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :first_item_id %><br>
+    <%= f.text_field :first_item_id %>
+  </div>
+  <div class="field">
+    <%= f.label :second_item_id %><br>
+    <%= f.text_field :second_item_id %>
+  </div>
+  <div class="field">
+    <%= f.label :rank %><br>
+    <%= f.text_field :rank %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,29 @@
+<h1>Live roosters</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Item</th>
+      <th>No. of orders</th>
+      <th>Time Left</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @roosters.each do |rooster| %>
+      <tr>
+        <td><%= rooster.item_id %></td>
+        <td><%= rooster.number_of_orders %></td>
+        <td><%= rooster.ttl %></td>
+        <!-- <td><%= link_to 'Show', rooster %></td>
+        <td><%= link_to 'Edit', edit_rooster_path(rooster) %></td>
+        <td><%= link_to 'Destroy', rooster, method: :delete, data: { confirm: 'Are you sure?' } %></td> -->
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Rooster', new_rooster_path %>

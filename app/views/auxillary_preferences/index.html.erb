@@ -1,0 +1,29 @@
+<h1>Listing auxillary_preferences</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>First item</th>
+      <th>Second item</th>
+      <th>Rank</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @auxillary_preferences.each do |auxillary_preference| %>
+      <tr>
+        <td><%= auxillary_preference.first_item_id %></td>
+        <td><%= auxillary_preference.second_item_id %></td>
+        <td><%= auxillary_preference.rank %></td>
+        <td><%= link_to 'Show', auxillary_preference %></td>
+        <td><%= link_to 'Edit', edit_auxillary_preference_path(auxillary_preference) %></td>
+        <td><%= link_to 'Destroy', auxillary_preference, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Auxillary preference', new_auxillary_preference_path %>

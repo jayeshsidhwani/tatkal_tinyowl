@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Item:</strong>
+  <%= @rooster.item_id %>
+</p>
+
+<p>
+  <strong>Number of orders:</strong>
+  <%= @rooster.number_of_orders %>
+</p>
+
+<p>
+  <strong>Ttl:</strong>
+  <%= @rooster.ttl %>
+</p>
+
+<%= link_to 'Edit', edit_rooster_path(@rooster) %> |
+<%= link_to 'Back', roosters_path %>
