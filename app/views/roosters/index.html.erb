@@ -15,7 +15,7 @@
     <% @roosters.each do |rooster| %>
       <tr>
         <td><%= rooster.item_id %></td>
-        <td><%= @item_name_hash[rooster.item_id]%></td>
+        <td><%= @item_name_hash[rooster.item_id] rescue 'NA' %></td>
         <td><%= rooster.number_of_orders %></td>
         <td><%= rooster.ttl %></td>
         <td><%= link_to 'Show', rooster %></td>
