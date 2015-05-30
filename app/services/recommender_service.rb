@@ -8,7 +8,9 @@ module RecommenderService
       more_items_to_fetch = 10 - exact_matches.length
 
       aux_matches = fetch_from_auxillary(recommendations, items_in_rooster, more_items_to_fetch)
-
+      common = aux_matches & exact_matches
+      aux_matches = aux_matches - common
+      
       serialize({
                   exact: exact_matches,
                   aux_matches: aux_matches
@@ -38,7 +40,7 @@ module RecommenderService
         score[item] = max
       end
       
-      score.sort_by {|k,v| v}.reverse
+      score = score.sort_by {|k,v| v}.reverse
       max_length = [items_in_rooster.length, 10].min
       score.keys[0, max_length]
     end
