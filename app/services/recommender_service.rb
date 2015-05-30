@@ -57,6 +57,8 @@ module RecommenderService
         item = Item.where(:item_id => datum).first
         result[:aux] << item
       end
+      result[:exact] = result[:exact].compact
+      result[:aux] = result[:aux].compact
       result
     end
   end
