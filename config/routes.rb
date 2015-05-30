@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :items
+
   resources :users
   get 'users/:id/recommended_items' => 'users#recommended_items'
 

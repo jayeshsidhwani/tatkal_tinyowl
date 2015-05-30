@@ -2,7 +2,8 @@ namespace :ingest do
   require 'csv'
 
   task :auxillary_preferences => :environment do
-    aux = CSV.read('/Users/jayesh/Downloads/auxillary_preferences.csv')
+    path = Rails.root.join('lib/tmp/auxillary_preferences.csv')
+    aux = CSV.read(path)
     aux.each do |au|
       AuxillaryPreference.create(first_item_id: au[0],
                                  second_item_id: au[1],
@@ -11,7 +12,8 @@ namespace :ingest do
   end
 
   task :populate_user_ids => :environment do
-    user_ids = CSV.read('/Users/jayesh/Downloads/user_preferences.csv')
+    path = Rails.root.join('lib/tmp/user_preferences.csv')
+    user_ids = CSV.read(path)
     all_user_ids = user_ids.each {|au| au[0]}
     all_user_ids.uniq!
 
@@ -19,4 +21,31 @@ namespace :ingest do
       User.create(id: u)
     end
   end
+
+  task :user_preferences => :environment do
+    path = Rails.root.join('lib/tmp/user_preferences.csv')
+    prefs = CSV.read(path)
+
+    prefs.each do |prefs|
+      UserPreference.create(user_id: prefs[0],
+                            item_id: prefs[1],
+                            rank: (prefs[2].to_f*100))
+    end
+  end
+
+  task :item_details => :environment do
+    path = Rails.root.join('lib/tmp/item_details.csv')
+    prefs = CSV.read(path)
+
+    prefs.each do |prefs|
+      Item.create(id: prefs[0],
+                  name: prefs[1],
+                  item_type: prefs[2],
+                  restaurant_name: prefs[3],
+                  base_price: prefs[4])
+    end
+  end
+
+  task :setup => [:auxillary_preferences, :user_preferences, :item_details, :populate_user_ids]
+
 end
