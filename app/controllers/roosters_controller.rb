@@ -5,7 +5,7 @@ class RoostersController < ApplicationController
   # GET /roosters.json
   def index
     @roosters = Rooster.all
-    item_id = @rooster.pluck(:item_id)
+    item_id = @roosters.pluck(:item_id)
     @item_name_hash = Item.where(:item_id => item_id).index_by(&:item_id)
   end
 
