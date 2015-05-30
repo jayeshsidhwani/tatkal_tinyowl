@@ -3,13 +3,16 @@ module RecommenderService
     def recommend(user)
       recommendations = recommended_items(user)
       items_in_rooster = rooster_items(user)
-      
+
       exact_matches = recommendations.where(:item_id => items_in_rooster).pluck(:item_id)
       more_items_to_fetch = 10 - exact_matches.length
-      
+
       aux_matches = fetch_from_auxillary(items_in_rooster, more_items_to_fetch)
-      exact_matches = exact_matches + aux_matches
-      exact_matches
+
+      serialize({
+                  exact: exact_matches,
+                  aux_matches: aux_matches
+      })
     end
 
     def rooster_items(user)
@@ -22,8 +25,22 @@ module RecommenderService
 
     def fetch_from_auxillary(items_in_rooster, more_items_to_fetch)
       AuxillaryPreference.where(first_item_id: items_in_rooster).order('rank desc').
-      limit(more_items_to_fetch).
-      pluck(:second_item_id)
+        limit(more_items_to_fetch).
+        pluck(:second_item_id)
+    end
+
+    def serialize(data)
+      result = {exact: [], aux: [] }
+      data[:exact].each do |datum|
+        item = Item.find(datum)
+        result[:exact].append(item)
+      end
+
+      data[:aux].each do |datum|
+        item = Item.find(datum)
+        result[:aux].append(item)
+      end
+      data
     end
   end
 end
