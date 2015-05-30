@@ -29,16 +29,16 @@ module RecommenderService
       items_in_rooster.each do |item|
         max = 0
         recommendations.each do |recommend|
-          rank = AuxillaryPreference.where(first_item_id: item, second_item_id: recommend).first.rank rescue 0
-          if rank > max
-            score[item] = rank
+          rank = AuxillaryPreference.where(first_item_id: item, second_item_id: recommend.item_id).first.rank rescue 0
+          if rank >= max
             max = rank
           end
         end
+        score[item] = max
       end
       
       score.sort_by {|k,v| v}.reverse
-      max_length = min(items_in_rooster, 10)
+      max_length = [items_in_rooster.length, 10].min
       score.keys[0, (max_length-1)]
     end
 
