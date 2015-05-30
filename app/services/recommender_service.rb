@@ -7,7 +7,7 @@ module RecommenderService
       exact_matches = recommendations.where(:item_id => items_in_rooster).pluck(:item_id)
       more_items_to_fetch = 10 - exact_matches.length
 
-      aux_matches = fetch_from_auxillary(items_in_rooster, more_items_to_fetch)
+      aux_matches = fetch_from_auxillary(recommendations, items_in_rooster, more_items_to_fetch)
 
       serialize({
                   exact: exact_matches,
@@ -23,10 +23,23 @@ module RecommenderService
       UserPreference.where(user_id: user.id.to_s).order(rank: :desc)
     end
 
-    def fetch_from_auxillary(items_in_rooster, more_items_to_fetch)
-      AuxillaryPreference.where(first_item_id: items_in_rooster).order('rank desc').
-        limit(more_items_to_fetch).
-        pluck(:second_item_id)
+    def fetch_from_auxillary(recommendations, items_in_rooster, more_items_to_fetch)
+      score = {}
+
+      items_in_rooster.each do |item|
+        max = 0
+        recommendations.each do |recommend|
+          rank = AuxillaryPreference.where(first_item_id: item, second_item_id: recommend).first.rank rescue 0
+          if rank > max
+            score[item] = rank
+            max = rank
+          end
+        end
+      end
+      
+      score.sort_by {|k,v| v}.reverse
+      max_length = min(items_in_rooster, 10)
+      score.keys[0, (max_length-1)]
     end
 
     def serialize(data)
