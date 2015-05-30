@@ -32,12 +32,12 @@ module RecommenderService
     def serialize(data)
       result = {exact: [], aux: [] }
       data[:exact].each do |datum|
-        item = Item.find(datum)
+        item = Item.where(:item_id => datum)
         result[:exact].append(item)
       end
 
       data[:aux].each do |datum|
-        item = Item.find(datum)
+        item = Item.where(:item_id => datum)
         result[:aux].append(item)
       end
       data

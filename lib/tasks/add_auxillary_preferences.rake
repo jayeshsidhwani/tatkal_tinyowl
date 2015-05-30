@@ -37,12 +37,12 @@ namespace :ingest do
     path = Rails.root.join('lib/tmp/item_details.csv')
     prefs = CSV.read(path)
 
-    prefs.each do |prefs|
-      Item.create(id: prefs[0],
-                  name: prefs[1],
-                  item_type: prefs[2],
-                  restaurant_name: prefs[3],
-                  base_price: prefs[4])
+    prefs.each do |pref|
+      Item.create(item_id: pref[0],
+                  name: pref[1],
+                  item_type: pref[2],
+                  restaurant_name: pref[3],
+                  base_price: pref[4].to_s)
     end
   end
 
